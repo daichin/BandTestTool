@@ -6,12 +6,12 @@
         android:id="@+id/menu_open_script"
         android:icon="@drawable/document_open"
         android:orderInCategory="1"
-        android:title="@string/action_settings"
+        android:title="@string/document_open"
         app:showAsAction="ifRoom|withText"/>
     <item
         android:id="@+id/menu_bt_disconnect"
         android:icon="@drawable/bluetooth_disconnect"
-        android:title="@string/action_settings"
+        android:title="@string/bluetooth_disconnect"
         android:orderInCategory="2"
         app:showAsAction="ifRoom|withText" />
 </menu>

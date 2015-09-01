@@ -5,6 +5,6 @@
         android:id="@+id/menu_bt_scan"
         android:icon="@drawable/bluetooth_wave_sync"
         android:orderInCategory="1"
-        android:title="@string/action_settings"
+        android:title="@string/menu_scan"
         app:showAsAction="ifRoom|withText"/>
 </menu>

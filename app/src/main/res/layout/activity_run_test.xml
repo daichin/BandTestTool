@@ -7,12 +7,17 @@
     tools:context="com.example.ch_dc.bandtesttool.RunTestActivity">
 
     <Button
-        android:layout_width="400px"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Auto Run"
         android:id="@+id/button_auto_run_testing"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="false"
+        android:longClickable="false"
+        android:singleLine="false"
+        android:background="@drawable/btn_style" />
 
     <ListView
         android:layout_width="wrap_content"
