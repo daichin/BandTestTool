@@ -9,11 +9,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class RunTestActivity extends AppCompatActivity {
     private ArrayAdapter<String> mArrayAdapter = null;
     private ListView m_listview_test_function = null;
+
+    String[] base_function_name = {"Function 1", "Function 2", "Function 3", "Function 4", "Function 5", "Function 6", "Function 7"} ;
+    Integer[] imageId = {R.drawable.blank, R.drawable.blank, R.drawable.blank, R.drawable.blank, R.drawable.blank, R.drawable.blank, R.drawable.blank};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,24 +26,19 @@ public class RunTestActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String message = intent.getStringExtra(MainActivity.EXTRA_DEVICE_NAME);
         setTitle(message);
+        CustomList adapter = new CustomList(RunTestActivity.this, base_function_name, imageId);
 
-
-        mArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        //mArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         m_listview_test_function = (ListView)findViewById(R.id.listView_test_function);
-        m_listview_test_function.setAdapter(mArrayAdapter);
+        m_listview_test_function.setAdapter(adapter);
         m_listview_test_function.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Toast.makeText(RunTestActivity.this, "You Clicked at " + base_function_name[+position], Toast.LENGTH_SHORT).show();
+                ImageView imageView = (ImageView) view.findViewById(R.id.img);
+                imageView.setImageResource(R.drawable.check);
             }
         });
-        mArrayAdapter.add("Function 1");
-        mArrayAdapter.add("Function 2");
-        mArrayAdapter.add("Function 3");
-        mArrayAdapter.add("Function 4");
-        mArrayAdapter.add("Function 5");
-        mArrayAdapter.add("Function 6");
-        mArrayAdapter.add("Function 7");
     }
 
     @Override

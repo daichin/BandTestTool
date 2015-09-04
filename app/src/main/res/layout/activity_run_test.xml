@@ -15,15 +15,33 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="false"
+        android:layout_alignParentRight="false"
         android:longClickable="false"
         android:singleLine="false"
         android:background="@drawable/btn_style" />
+
+    <View
+        android:layout_below="@+id/button_auto_run_testing"
+        android:id="@+id/view_top"
+        android:background="#91341011"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="30px"
+        android:layout_height="2dp" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listView_test_function"
-        android:layout_below="@+id/button_auto_run_testing"
+        android:layout_below="@+id/view_top"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:divider="#91341011"
+        android:dividerHeight="5px"/>
+
+    <View
+        android:layout_below="@+id/listView_test_function"
+        android:id="@+id/view_bottom"
+        android:background="#91341011"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp" />
 </RelativeLayout>
