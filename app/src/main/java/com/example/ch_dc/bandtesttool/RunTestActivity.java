@@ -1,16 +1,15 @@
 package com.example.ch_dc.bandtesttool;
 
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,11 +26,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class RunTestActivity extends AppCompatActivity {
-    private ArrayAdapter<String> mArrayAdapter = null;
     private ListView m_listview_test_function = null;
+    private Button m_button_auto_run = null;
     public final static String EXTRA_FUNCTION_NAME = "function_name";
     public final static String EXTRA_FUNCTION_DETAIL = "function_detail";
-
 
     String[] base_function_name = {"Function 1", "Function 2", "Function 3", "Function 4", "Function 5", "Function 6", "Function 7"} ;
     Integer[] imageId = {R.drawable.blank, R.drawable.blank, R.drawable.blank, R.drawable.blank, R.drawable.blank, R.drawable.blank, R.drawable.blank};
@@ -45,7 +43,6 @@ public class RunTestActivity extends AppCompatActivity {
         setTitle(message);
         CustomList adapter = new CustomList(RunTestActivity.this, base_function_name, imageId);
 
-        //mArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
         m_listview_test_function = (ListView)findViewById(R.id.listView_test_function);
         m_listview_test_function.setAdapter(adapter);
         m_listview_test_function.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -66,6 +63,32 @@ public class RunTestActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        m_button_auto_run = (Button)findViewById(R.id.button_auto_run_testing);
+        m_button_auto_run.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Common myApp = Common.getInstance();
+                for (int i = 0 ; i < base_function_detail.length ; i++) {
+                    // send MSG
+                    myApp.SendMsg(base_function_name[i], base_function_detail[i]);
+                    ImageView imageView = (ImageView) (getViewByPosition(i, m_listview_test_function)).findViewById(R.id.img);
+                    imageView.setImageResource(R.drawable.check);
+                }
+            }
+        });
+    }
+
+    public View getViewByPosition(int pos, ListView listView) {
+        final int firstListItemPosition = listView.getFirstVisiblePosition();
+        final int lastListItemPosition = firstListItemPosition + listView.getChildCount() - 1;
+
+        if (pos < firstListItemPosition || pos > lastListItemPosition ) {
+            return listView.getAdapter().getView(pos, null, listView);
+        } else {
+            final int childIndex = pos - firstListItemPosition;
+            return listView.getChildAt(childIndex);
+        }
     }
 
     @Override
