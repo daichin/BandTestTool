@@ -14,7 +14,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,7 +24,13 @@
         </activity>
         <activity
             android:name=".RunTestActivity"
-            android:label="@string/title_activity_run_test" >
+            android:label="@string/title_activity_run_test"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".FunctionDetailActivity"
+            android:label="@string/title_activity_function_detail"
+            android:theme="@android:style/Theme.Holo.Dialog" >
         </activity>
     </application>
 
