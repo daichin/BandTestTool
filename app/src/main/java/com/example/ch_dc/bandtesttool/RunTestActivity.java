@@ -25,6 +25,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import pl.droidsonroids.gif.GifDrawable;
+
 public class RunTestActivity extends AppCompatActivity {
     private ListView m_listview_test_function = null;
     private Button m_button_auto_run = null;
@@ -48,9 +50,18 @@ public class RunTestActivity extends AppCompatActivity {
         m_listview_test_function.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                GifDrawable gifFromResource = null;
+                try {
+                    gifFromResource = new GifDrawable(getResources(), R.drawable.searching);
+                }
+                catch (java.io.IOException e) {
+                    e.printStackTrace();
+                }
+
                 Toast.makeText(RunTestActivity.this, "You Clicked at " + base_function_name[+position], Toast.LENGTH_SHORT).show();
                 ImageView imageView = (ImageView) view.findViewById(R.id.img);
-                imageView.setImageResource(R.drawable.check);
+                imageView.setImageDrawable(gifFromResource);
+                // imageView.setImageResource(R.drawable.searching);
 
                 TextView textView = (TextView) view.findViewById(R.id.txt);
                 String name = textView.getText().toString();
