@@ -20,7 +20,8 @@ import android.widget.TextView;
 
 import java.util.Set;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+{
     private final String TAG = "BandTestTool";
     private ArrayAdapter<String> mArrayAdapter = null;
     private ListView m_listview_bt_device = null;
@@ -29,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
     public final static String EXTRA_DEVICE_NAME = "device_name";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
@@ -48,12 +50,14 @@ public class MainActivity extends AppCompatActivity {
         pairedListView.setOnItemClickListener(mDeviceClickListener);
 
         mArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
-        m_listview_bt_device = (ListView)findViewById(R.id.listView_device_list);
+        m_listview_bt_device = (ListView) findViewById(R.id.listView_device_list);
         m_listview_bt_device.setAdapter(mArrayAdapter);
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        m_listview_bt_device.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        m_listview_bt_device.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
                 String info = mArrayAdapter.getItem(position);
                 String address = info.substring(info.length() - 17);
                 String name = info.substring(0, (info.length() - 17));
@@ -62,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 Common myApp = Common.getInstance();
                 myApp.create_socket(mDevice);
                 mBluetoothAdapter.cancelDiscovery();
-                if (myApp.connect_sock()) {
+                if (myApp.connect_sock())
+                {
                     // start the function testing page
                     Intent intent = new Intent();
                     intent.putExtra(EXTRA_DEVICE_NAME, name);
@@ -75,19 +80,25 @@ public class MainActivity extends AppCompatActivity {
         // Get a set of currently paired devices
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         // If there are paired devices, add each one to the ArrayAdapter
-        if (pairedDevices.size() > 0) {
+        if (pairedDevices.size() > 0)
+        {
             findViewById(R.id.title_paired_devices).setVisibility(View.VISIBLE);
-            for (BluetoothDevice device : pairedDevices) {
+            for (BluetoothDevice device : pairedDevices)
+            {
                 pairedDevicesArrayAdapter.add(device.getName() + "\n" + device.getAddress());
             }
-        } else {
+        } else
+        {
             String noDevices = getResources().getText(R.string.none_paired).toString();
             pairedDevicesArrayAdapter.add(noDevices);
         }
     }
+
     private AdapterView.OnItemClickListener mDeviceClickListener
-            = new AdapterView.OnItemClickListener() {
-        public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
+            = new AdapterView.OnItemClickListener()
+    {
+        public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3)
+        {
             // Cancel discovery because it's costly and we're about to connect
             mBluetoothAdapter.cancelDiscovery();
 
@@ -100,7 +111,8 @@ public class MainActivity extends AppCompatActivity {
             Common myApp = Common.getInstance();
             myApp.create_socket(mDevice);
             mBluetoothAdapter.cancelDiscovery();
-            if (myApp.connect_sock()) {
+            if (myApp.connect_sock())
+            {
                 // start the function testing page
                 Intent intent = new Intent();
                 intent.putExtra(EXTRA_DEVICE_NAME, name);
@@ -109,19 +121,23 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
+        switch (item.getItemId())
+        {
             case R.id.menu_bt_scan:
                 // start bt scan
                 startScan();
@@ -130,20 +146,27 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-    private BroadcastReceiver mBroadcast =  new BroadcastReceiver() {
+
+    private BroadcastReceiver mBroadcast = new BroadcastReceiver()
+    {
         private final static String MY_MESSAGE = "com.givemepass.sendmessage";
+
         @Override
-        public void onReceive(Context mContext, Intent intent) {
+        public void onReceive(Context mContext, Intent intent)
+        {
             // TODO Auto-generated method stub
             String action = intent.getAction();
             if (BluetoothDevice.ACTION_FOUND.equals(action))
             {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                if (device.getName() != null && device.getName().substring(0, 3).contentEquals("CB_")){
-                    for(int i=0 ; i<mArrayAdapter.getCount() ; i++) {
+                if (device.getName() != null && device.getName().substring(0, 3).contentEquals("CB_"))
+                {
+                    for (int i = 0; i < mArrayAdapter.getCount(); i++)
+                    {
                         String item = mArrayAdapter.getItem(i);
 
-                        if (item.equals(device.getName() + "\n" + device.getAddress())) {
+                        if (item.equals(device.getName() + "\n" + device.getAddress()))
+                        {
                             return;
                         }
                     }
@@ -153,7 +176,8 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private void startScan(){
+    private void startScan()
+    {
         mBluetoothAdapter.cancelDiscovery();
         mArrayAdapter.clear();
         mBluetoothAdapter.startDiscovery();
